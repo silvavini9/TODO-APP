@@ -1,12 +1,12 @@
-const { Model, Schema } = require("mongoose");
+const { model, Schema, Types } = require("mongoose");
 const ObjectId = Types.ObjectId;
 
 const UserSchema = new Schema({
-    _id: ObjectId,
-    name: String,
-    email: String,
-    cpf: Number,
+    name: {type: String},
+    email: {type: String},
+    password: {type: String},
+    tasks: [{ type: ObjectId, ref: 'Task' }],
 });
 
 
-module.exports = Model("User", UserSchema)
+module.exports = model("User", UserSchema)

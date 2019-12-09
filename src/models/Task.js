@@ -1,10 +1,11 @@
-const {Model, Schema, Types} = require('mongoose');
+const {model, Schema, Types} = require('mongoose');
 const ObjectId = Types.ObjectId;
 
 const TaskSchema = new Schema({
-    name: String,
-    description: String,
-    idUser: ObjectId, ref:' User',
+    name: { type: String },
+    description: { type: String },
+    idUser: { type: ObjectId, ref:'User' },
+    isDone: { type: Boolean, default: false },
 });
 
-module.exports = Model( "Task", TaskSchema );
+module.exports = model("Task", TaskSchema );
