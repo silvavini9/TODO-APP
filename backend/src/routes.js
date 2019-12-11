@@ -5,13 +5,16 @@ const UserController = require('./controllers/UserController');
 const {authenticationMiddleware} = require('./helpers/auth-middleware');
 const passport = require('passport');
 
-router.get('/tasks', TaskController.index);
-router.get('/tasks/done', TaskController.getHistory);
-router.post('/task/add', TaskController.save);
-router.put('/task/:taskid/update', TaskController.update)
-router.delete('/task/:taskid/delete', TaskController.delete)
+router.get('/tasks',authenticationMiddleware(), TaskController.index);
+router.get('/tasks/done',authenticationMiddleware() , TaskController.getHistory);
+router.post('/task/add', authenticationMiddleware() , TaskController.save);
+router.put('/task/:taskid/update', authenticationMiddleware(), TaskController.update)
+router.delete('/task/:taskid/delete', authenticationMiddleware(), TaskController.delete)
 
+
+router.post('/login', passport.authenticate('local', { failureRedirect: '/login', successRedirect:'/tasks' }), LoginController.login);
 router.post('/user/register', UserController.save);
-router.post('/user/login', UserController.login);
+router.post('/user/edit', authenticationMiddleware(), UserController.edit);
+
 
 module.exports = router
